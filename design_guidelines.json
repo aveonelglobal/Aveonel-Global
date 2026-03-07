@@ -1,0 +1,128 @@
+{
+  "identity": {
+    "name": "Aveonel Global",
+    "founder": "Aovila Saandeep",
+    "mission": "Operations support service for Ontario coaches/consultants.",
+    "tone": "Warm, Elegant, Trustworthy, Calm, Organized.",
+    "theme": "light"
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Playfair Display, serif",
+      "weights": ["400", "600", "700"],
+      "usage": "Use for all H1-H3 headings. Letter spacing: tight.",
+      "install_command": "yarn add @fontsource/playfair-display"
+    },
+    "body": {
+      "font_family": "Manrope, sans-serif",
+      "weights": ["400", "500", "700"],
+      "usage": "Use for body text, UI elements, buttons.",
+      "install_command": "yarn add @fontsource/manrope"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": {
+        "default": "#FDFBF7",
+        "paper": "#FFFFFF",
+        "subtle": "#F5F5F0"
+      },
+      "foreground": {
+        "default": "#1A1A1A",
+        "muted": "#5C5C5C"
+      },
+      "primary": {
+        "default": "#2E5C55",
+        "foreground": "#FFFFFF",
+        "hover": "#244A44"
+      },
+      "secondary": {
+        "default": "#D4C5A9",
+        "foreground": "#1A1A1A"
+      },
+      "accent": {
+        "default": "#C17F59",
+        "foreground": "#FFFFFF"
+      },
+      "border": {
+        "default": "#E5E5E0"
+      }
+    },
+    "gradients": {
+      "subtle_glow": "linear-gradient(135deg, rgba(253,251,247,1) 0%, rgba(245,245,240,1) 100%)",
+      "warm_overlay": "linear-gradient(to bottom, rgba(253,251,247,0), rgba(253,251,247,1))"
+    }
+  },
+  "layout": {
+    "container": {
+      "maxWidth": "max-w-7xl",
+      "padding": "px-6 md:px-12 lg:px-24"
+    },
+    "spacing": {
+      "section_gap": "py-20 md:py-32",
+      "element_gap": "gap-6 md:gap-12"
+    },
+    "radius": {
+      "default": "rounded-xl",
+      "large": "rounded-2xl",
+      "pill": "rounded-full"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#2E5C55] text-white hover:bg-[#244A44] rounded-full px-8 py-4 font-medium transition-all duration-300 shadow-md hover:shadow-lg",
+      "secondary": "bg-[#FDFBF7] border border-[#2E5C55] text-[#2E5C55] hover:bg-[#F5F5F0] rounded-full px-8 py-4 font-medium transition-all duration-300",
+      "ghost": "text-[#2E5C55] hover:bg-[#F5F5F0] rounded-full px-6 py-3 font-medium transition-all duration-300"
+    },
+    "cards": {
+      "feature": "bg-white p-8 rounded-2xl border border-[#E5E5E0] shadow-sm hover:shadow-md transition-all duration-300 group",
+      "testimonial": "bg-[#F5F5F0] p-10 rounded-2xl relative"
+    },
+    "inputs": {
+      "default": "bg-white border-[#E5E5E0] focus:border-[#2E5C55] focus:ring-[#2E5C55] rounded-lg px-4 py-3"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": {
+      "soft": "0 4px 20px -2px rgba(46, 92, 85, 0.05)",
+      "hover": "0 10px 40px -4px rgba(46, 92, 85, 0.1)"
+    },
+    "textures": {
+      "grain": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E\")"
+    }
+  },
+  "images": {
+    "hero": {
+      "url": "https://images.unsplash.com/photo-1704655295066-681e61ecca6b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxlbGVnYW50JTIwb2ZmaWNlJTIwaW50ZXJpb3IlMjBjYWxtJTIwYmVpZ2V8ZW58MHx8fHwxNzcyOTI2MjIxfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Elegant desk with flowers, calm office atmosphere",
+      "usage": "Hero background or side image"
+    },
+    "consulting_1": {
+      "url": "https://images.unsplash.com/photo-1565688527174-775059ac429c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMG1lZXRpbmclMjBjb25zdWx0aW5nJTIwZGl2ZXJzZSUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NzI5MjYyMjJ8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Diverse professionals in a meeting",
+      "usage": "Services or Problem/Solution section"
+    },
+    "consulting_2": {
+      "url": "https://images.unsplash.com/flagged/photo-1551135049-83f3419ef05c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwyfHxidXNpbmVzcyUyMG1lZXRpbmclMjBjb25zdWx0aW5nJTIwZGl2ZXJzZSUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NzI5MjYyMjJ8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Professionals discussing at a desk",
+      "usage": "About or How It Works section"
+    }
+  },
+  "universal_guidelines": [
+    "Do not use gradients for dark colors.",
+    "Avoid generic centered layouts; use asymmetry for interest.",
+    "Use glass-morphism with caution, prefer solid elegant surfaces.",
+    "Use 2-3x more spacing than typical designs.",
+    "Add 'data-testid' to all interactive elements.",
+    "Use 'sonner' for toasts.",
+    "Mobile-first responsive design is mandatory.",
+    "Accessibility: Ensure high contrast text (WCAG AA)."
+  ],
+  "instructions_to_main_agent": {
+    "fonts": "Install fonts using the provided commands. Configure Tailwind to use them.",
+    "colors": "Update tailwind.config.js with the provided palette.",
+    "components": "Use custom HTML/Tailwind for Marketing pages. Use Shadcn for Admin Dashboard and Forms.",
+    "dashboard": "Keep the dashboard clean, minimalist, and light. No dark mode dashboard unless requested.",
+    "animations": "Use framer-motion for smooth entrance animations. Stagger children for lists."
+  }
+}
