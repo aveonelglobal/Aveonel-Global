@@ -74,8 +74,8 @@ const ThankYouPage = () => {
 
           <p className="text-sm text-gray-500 mt-8">
             Questions? Email us at{' '}
-            <a href="mailto:hello@aveonelglobal.com" className="text-forest hover:underline">
-              hello@aveonelglobal.com
+            <a href="mailto:aveonel.global@gmail.com" className="text-forest hover:underline">
+              aveonel.global@gmail.com
             </a>
           </p>
         </motion.div>

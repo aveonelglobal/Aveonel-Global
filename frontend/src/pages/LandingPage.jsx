@@ -689,7 +689,7 @@ const Footer = () => (
           <ul className="space-y-2 text-gray-400">
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4" />
-              <span>hello@aveonelglobal.com</span>
+              <span>aveonel.global@gmail.com</span>
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
