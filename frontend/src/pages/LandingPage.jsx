@@ -592,14 +592,24 @@ const CTASection = () => (
         <p className="text-white/80 text-lg">
           Join 10 Ontario coaches in our free 30-day operations pilot. Limited spots available.
         </p>
-        <Link 
-          to="/apply" 
-          className="inline-flex items-center gap-2 bg-white text-forest hover:bg-cream rounded-full px-8 py-4 font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-          data-testid="cta-section-btn"
-        >
-          Apply for the Pilot
-          <ArrowRight className="w-5 h-5" />
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link 
+            to="/apply" 
+            className="inline-flex items-center gap-2 bg-white text-forest hover:bg-cream rounded-full px-8 py-4 font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+            data-testid="cta-section-btn"
+          >
+            Apply for the Pilot
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+          <Link 
+            to="/pilot-guide" 
+            className="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-full px-8 py-4 font-medium transition-all duration-300"
+            data-testid="download-guide-btn"
+          >
+            Download Pilot Guide
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
       </motion.div>
     </div>
   </section>
