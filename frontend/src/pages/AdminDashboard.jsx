@@ -164,9 +164,11 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center">
-                <span className="text-white font-heading font-bold text-lg">A</span>
-              </div>
+              <img 
+                src="https://customer-assets.emergentagent.com/job_pilot-launch-4/artifacts/rjad5uf0_AVEONEL%20Logo_%20Clarity%20and%20Prosperity%20-%20Copy.png" 
+                alt="Aveonel Global Logo" 
+                className="h-10 w-auto"
+              />
               <div>
                 <h1 className="font-heading text-xl font-semibold text-gray-900">Pipeline Dashboard</h1>
                 <p className="text-xs text-gray-500">Aveonel Global</p>

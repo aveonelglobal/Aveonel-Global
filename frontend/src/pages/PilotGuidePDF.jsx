@@ -49,9 +49,11 @@ const PilotGuidePDF = () => {
         {/* Cover / Header */}
         <div className="text-center mb-16 print:mb-12">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-14 h-14 rounded-full bg-forest flex items-center justify-center print:border-2 print:border-forest print:bg-white">
-              <span className="text-white font-heading font-bold text-2xl print:text-forest">A</span>
-            </div>
+            <img 
+              src="https://customer-assets.emergentagent.com/job_pilot-launch-4/artifacts/rjad5uf0_AVEONEL%20Logo_%20Clarity%20and%20Prosperity%20-%20Copy.png" 
+              alt="Aveonel Global Logo" 
+              className="h-20 w-auto"
+            />
           </div>
           <h1 className="font-heading text-4xl md:text-5xl font-semibold text-gray-900 mb-4 print:text-3xl">
             30-Day Operations Pilot

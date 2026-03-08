@@ -40,11 +40,13 @@ const Header = () => (
   <header className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-[#E5E5E0]">
     <div className="section-container">
       <div className="flex items-center justify-between h-20">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center">
-            <span className="text-white font-heading font-bold text-lg">A</span>
-          </div>
-          <span className="font-heading text-xl font-semibold text-forest">Aveonel Global</span>
+        <Link to="/" className="flex items-center gap-3">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_pilot-launch-4/artifacts/rjad5uf0_AVEONEL%20Logo_%20Clarity%20and%20Prosperity%20-%20Copy.png" 
+            alt="Aveonel Global Logo" 
+            className="h-12 w-auto"
+          />
+          <span className="font-heading text-xl font-semibold text-forest hidden sm:block">Aveonel Global</span>
         </Link>
         
         <nav className="hidden md:flex items-center gap-8">
@@ -82,7 +84,7 @@ const HeroSection = () => (
           <motion.div variants={fadeInUp}>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forest/10 text-forest text-sm font-medium">
               <Sparkles className="w-4 h-4" />
-              Now accepting 10 Ontario coaches
+              Only 10 spots · Free 30-day pilot
             </span>
           </motion.div>
           
@@ -90,15 +92,15 @@ const HeroSection = () => (
             variants={fadeInUp}
             className="font-heading text-4xl sm:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight"
           >
-            Your coaching business deserves{' '}
-            <span className="text-forest">organized operations</span>
+            Your back-office,{' '}
+            <span className="text-forest">handled.</span>
           </motion.h1>
           
           <motion.p 
             variants={fadeInUp}
             className="text-lg text-gray-600 max-w-xl"
           >
-            Stop losing clients to messy scheduling and slow onboarding. We help Ontario coaches streamline their operations so they can focus on what matters — coaching.
+            You became a coach to transform lives — not to drown in scheduling, onboarding, and client tracking. I handle the operational details so you can <span className="font-medium text-gray-900">sleep peacefully</span> and <span className="font-medium text-gray-900">coach freely</span>.
           </motion.p>
           
           <motion.div 
@@ -110,7 +112,7 @@ const HeroSection = () => (
               className="btn-primary gap-2"
               data-testid="hero-cta-btn"
             >
-              Book Free Consultation
+              Start Free 30-Day Pilot
               <ArrowRight className="w-5 h-5" />
             </Link>
             <a 
@@ -129,11 +131,11 @@ const HeroSection = () => (
           >
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <CheckCircle2 className="w-5 h-5 text-forest" />
-              <span>30-day free pilot</span>
+              <span>For business & executive coaches</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <CheckCircle2 className="w-5 h-5 text-forest" />
-              <span>No commitment</span>
+              <span>Ontario, Canada</span>
             </div>
           </motion.div>
         </motion.div>
@@ -167,10 +169,10 @@ const ProblemSection = () => (
         className="text-center max-w-3xl mx-auto mb-16"
       >
         <h2 className="font-heading text-3xl md:text-4xl font-semibold text-gray-900 mb-6">
-          Sound familiar?
+          You didn't become a coach to do admin work
         </h2>
         <p className="text-lg text-gray-600">
-          Most coaches we meet are dealing with the same operational headaches.
+          Yet here you are — spending hours on tasks that have nothing to do with coaching.
         </p>
       </motion.div>
       
@@ -178,18 +180,18 @@ const ProblemSection = () => (
         {[
           {
             icon: Calendar,
-            title: "Scheduling chaos",
-            description: "Back-and-forth emails, double bookings, and missed appointments eating into your coaching time."
+            title: "Scheduling eats your day",
+            description: "Back-and-forth emails, timezone confusion, double bookings. You're a coach, not a calendar manager."
           },
           {
             icon: Clock,
-            title: "Slow onboarding",
-            description: "New clients waiting days for intake forms, contracts, and session details — losing momentum."
+            title: "Clients wait too long",
+            description: "New clients excited to start... then wait days for intake forms, contracts, and session details. Momentum dies."
           },
           {
             icon: BarChart3,
-            title: "No clear pipeline",
-            description: "Sticky notes and spreadsheets can't tell you who needs follow-up or where clients stand."
+            title: "You're dropping balls",
+            description: "Who needs follow-up? Where's that client in the process? It's all in your head — and it's exhausting."
           }
         ].map((item, index) => (
           <motion.div
@@ -212,6 +214,18 @@ const ProblemSection = () => (
           </motion.div>
         ))}
       </div>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mt-12 p-8 bg-cream-subtle rounded-2xl max-w-2xl mx-auto"
+      >
+        <p className="text-lg text-gray-700 italic">
+          "I just want someone to handle the details so I can focus on my clients and actually sleep at night."
+        </p>
+        <p className="text-sm text-gray-500 mt-3">— Every coach we've talked to</p>
+      </motion.div>
     </div>
   </section>
 );
@@ -305,10 +319,10 @@ const ServicesSection = () => (
         className="text-center max-w-3xl mx-auto mb-16"
       >
         <h2 className="font-heading text-3xl md:text-4xl font-semibold text-gray-900 mb-6">
-          What you get in the pilot
+          What I handle for you
         </h2>
         <p className="text-lg text-gray-600">
-          Three core systems to bring order to your coaching practice.
+          Three systems. Zero headaches. Complete peace of mind.
         </p>
       </motion.div>
       
@@ -316,12 +330,13 @@ const ServicesSection = () => (
         {[
           {
             icon: Calendar,
-            title: "Scheduling System",
+            title: "Scheduling",
+            subtitle: "Never chase a calendar again",
             features: [
               "Calendar integration",
               "Automated booking links",
-              "Reminder emails",
-              "Rescheduling workflow",
+              "Reminder emails (48h, 24h, 1h)",
+              "Easy rescheduling",
               "Timezone handling"
             ],
             accent: "forest"
@@ -329,6 +344,7 @@ const ServicesSection = () => (
           {
             icon: Users,
             title: "Client Onboarding",
+            subtitle: "First impressions, perfected",
             features: [
               "Welcome sequences",
               "Intake forms",
@@ -340,13 +356,14 @@ const ServicesSection = () => (
           },
           {
             icon: ClipboardCheck,
-            title: "Pipeline Tracker",
+            title: "Pipeline Tracking",
+            subtitle: "Know where every client stands",
             features: [
-              "Lead management",
+              "Visual dashboard",
               "Status tracking",
               "Follow-up reminders",
               "Notes & history",
-              "Progress visibility"
+              "Nothing falls through"
             ],
             accent: "beige"
           }
@@ -371,9 +388,12 @@ const ServicesSection = () => (
               }`} />
             </div>
             
-            <h3 className="font-heading text-2xl font-semibold text-gray-900 mb-6">
+            <h3 className="font-heading text-2xl font-semibold text-gray-900 mb-2">
               {service.title}
             </h3>
+            <p className="text-forest font-medium text-sm mb-6">
+              {service.subtitle}
+            </p>
             
             <ul className="space-y-3">
               {service.features.map((feature, i) => (
@@ -386,6 +406,17 @@ const ServicesSection = () => (
           </motion.div>
         ))}
       </div>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mt-12"
+      >
+        <p className="text-gray-600 mb-2">After 30-day free pilot</p>
+        <p className="text-3xl font-heading font-semibold text-gray-900">$799<span className="text-lg text-gray-500">/month</span></p>
+        <p className="text-sm text-gray-500 mt-2">Cancel anytime. No contracts.</p>
+      </motion.div>
     </div>
   </section>
 );
@@ -415,28 +446,37 @@ const FounderSection = () => (
           viewport={{ once: true }}
           className="space-y-6"
         >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/90 text-sm font-medium">
+            The person behind your operations
+          </div>
+          
           <h2 className="font-heading text-3xl md:text-4xl font-semibold">
-            Meet Aovila Saandeep
+            Hi, I'm Aovila
           </h2>
-          <p className="text-white/80 text-lg">
-            Founder of Aveonel Global
-          </p>
+          
           <div className="space-y-4 text-white/90">
             <p>
-              I started Aveonel Global because I saw too many talented coaches drowning in administrative work instead of doing what they do best — helping their clients transform.
+              I'm not a virtual assistant. I'm not software. <span className="text-white font-medium">I'm your detail-obsessed operations partner.</span>
             </p>
             <p>
-              After years of working with service-based businesses, I noticed a pattern: the coaches who thrived weren't necessarily better at coaching. They simply had better systems.
+              As a former Program Coordinator, I spent years making sure complex training programs ran flawlessly behind the scenes — coordinating clients, sales teams, and trainers, managing deliverables, and ensuring nothing fell through the cracks.
             </p>
             <p>
-              That's why I built this pilot program — to give Ontario coaches the operational foundation they need to scale their practice without the overwhelm.
+              I started Aveonel Global because I believe every coach deserves someone who treats their business problems like their own. Someone who sweats the details so you don't have to.
+            </p>
+            <p className="text-white font-medium text-lg">
+              My goal is simple: help you sleep peacefully knowing someone's got your back-office handled.
             </p>
           </div>
           
-          <div className="flex items-center gap-4 pt-4">
+          <div className="flex items-center gap-6 pt-4">
             <div className="flex items-center gap-2 text-sm text-white/70">
               <MapPin className="w-4 h-4" />
               <span>Ontario, Canada</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-white/70">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Detail-obsessed</span>
             </div>
           </div>
         </motion.div>
@@ -587,10 +627,10 @@ const CTASection = () => (
         className="max-w-2xl mx-auto space-y-8"
       >
         <h2 className="font-heading text-3xl md:text-4xl font-semibold text-white">
-          Ready to organize your coaching practice?
+          Ready to sleep peacefully?
         </h2>
         <p className="text-white/80 text-lg">
-          Join 10 Ontario coaches in our free 30-day operations pilot. Limited spots available.
+          Let me handle your back-office while you focus on coaching. 10 spots available for the free 30-day pilot.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 
@@ -598,7 +638,7 @@ const CTASection = () => (
             className="inline-flex items-center gap-2 bg-white text-forest hover:bg-cream rounded-full px-8 py-4 font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
             data-testid="cta-section-btn"
           >
-            Apply for the Pilot
+            Start Free Pilot
             <ArrowRight className="w-5 h-5" />
           </Link>
           <Link 
@@ -621,14 +661,16 @@ const Footer = () => (
     <div className="section-container">
       <div className="grid md:grid-cols-4 gap-12 mb-12">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-forest flex items-center justify-center">
-              <span className="text-white font-heading font-bold text-lg">A</span>
-            </div>
+          <div className="flex items-center gap-3 mb-4">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_pilot-launch-4/artifacts/rjad5uf0_AVEONEL%20Logo_%20Clarity%20and%20Prosperity%20-%20Copy.png" 
+              alt="Aveonel Global Logo" 
+              className="h-12 w-auto bg-white rounded-lg p-1"
+            />
             <span className="font-heading text-xl font-semibold">Aveonel Global</span>
           </div>
           <p className="text-gray-400 max-w-sm">
-            Operations support for Ontario coaches and consultants. Helping you focus on what matters — your clients.
+            Your back-office, handled. Helping Ontario coaches sleep peacefully and coach freely.
           </p>
         </div>
         
