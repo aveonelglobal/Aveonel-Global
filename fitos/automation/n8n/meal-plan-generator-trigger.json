@@ -1,0 +1,151 @@
+{
+  "name": "FitOS - Weekly Meal Plan Generator Trigger",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 20 * * 0" }]
+        }
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000001",
+      "name": "Sunday 8PM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-700, 0],
+      "notes": "Fires every Sunday at 20:00 local server time, ahead of the coming Monday-Sunday week."
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst day = now.getUTCDay(); // 0 = Sunday\nconst daysUntilMonday = day === 0 ? 1 : 8 - day;\nconst monday = new Date(now);\nmonday.setUTCDate(now.getUTCDate() + daysUntilMonday);\nconst weekStartDate = monday.toISOString().slice(0, 10);\nreturn [{ json: { week_start_date: weekStartDate } }];"
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000002",
+      "name": "Compute Upcoming Monday",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-460, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.FITOS_API_BASE_URL }}/get-dashboard",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "x-fitos-webhook-secret", "value": "={{ $env.FITOS_WEBHOOK_SECRET }}" }]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [{ "name": "user_id", "value": "={{ $env.FITOS_USER_ID }}" }]
+        },
+        "options": {}
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000006",
+      "name": "Check Schedule Exists (via dashboard)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-220, 0],
+      "notes": "Sanity check the profile is reachable before attempting to plan; /generate-week-plan itself will error clearly if no schedule was uploaded for the computed week."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FITOS_API_BASE_URL }}/generate-week-plan",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-fitos-webhook-secret", "value": "={{ $env.FITOS_WEBHOOK_SECRET }}" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ user_id: $env.FITOS_USER_ID, week_start_date: $('Compute Upcoming Monday').item.json.week_start_date }) }}",
+        "options": {}
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000003",
+      "name": "Generate Week Plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [20, 0],
+      "continueOnFail": true,
+      "notes": "Fails gracefully (continueOnFail) if the user hasn't uploaded next week's schedule yet - see the IF node below."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "succeeded",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notExists" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000004",
+      "name": "Plan Generated OK?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [260, 0]
+    },
+    {
+      "parameters": {
+        "workflowId": { "value": "={{ $env.FITOS_TELEGRAM_SENDER_WORKFLOW_ID }}" },
+        "workflowInputs": {
+          "value": {
+            "chat_id": "={{ $env.FITOS_TELEGRAM_CHAT_ID }}",
+            "message": "=Next week's plan ({{ $('Compute Upcoming Monday').item.json.week_start_date }}) is ready: {{ $json.summary }}",
+            "reminder_id": ""
+          }
+        }
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000005",
+      "name": "Notify: Plan Ready",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [500, -80]
+    },
+    {
+      "parameters": {
+        "workflowId": { "value": "={{ $env.FITOS_TELEGRAM_SENDER_WORKFLOW_ID }}" },
+        "workflowInputs": {
+          "value": {
+            "chat_id": "={{ $env.FITOS_TELEGRAM_CHAT_ID }}",
+            "message": "=Heads up: I couldn't generate next week's plan yet ({{ $('Compute Upcoming Monday').item.json.week_start_date }}) - please submit your weekly schedule on the FitOS dashboard.",
+            "reminder_id": ""
+          }
+        }
+      },
+      "id": "3a4b5c6d-0004-4a10-9a10-000000000007",
+      "name": "Notify: Schedule Missing",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [500, 80]
+    }
+  ],
+  "connections": {
+    "Sunday 8PM": {
+      "main": [[{ "node": "Compute Upcoming Monday", "type": "main", "index": 0 }]]
+    },
+    "Compute Upcoming Monday": {
+      "main": [[{ "node": "Check Schedule Exists (via dashboard)", "type": "main", "index": 0 }]]
+    },
+    "Check Schedule Exists (via dashboard)": {
+      "main": [[{ "node": "Generate Week Plan", "type": "main", "index": 0 }]]
+    },
+    "Generate Week Plan": {
+      "main": [[{ "node": "Plan Generated OK?", "type": "main", "index": 0 }]]
+    },
+    "Plan Generated OK?": {
+      "main": [
+        [{ "node": "Notify: Plan Ready", "type": "main", "index": 0 }],
+        [{ "node": "Notify: Schedule Missing", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}

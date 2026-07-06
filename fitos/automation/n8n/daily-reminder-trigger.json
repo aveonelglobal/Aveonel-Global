@@ -1,0 +1,105 @@
+{
+  "name": "FitOS - Daily Reminder Trigger",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 15 }]
+        }
+      },
+      "id": "1a2b3c4d-0002-4a10-9a10-000000000001",
+      "name": "Every 15 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-600, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.FITOS_API_BASE_URL }}/reminders/pending",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "date", "value": "={{ $now.format('yyyy-MM-dd') }}" },
+            { "name": "user_id", "value": "={{ $env.FITOS_USER_ID }}" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "x-fitos-webhook-secret", "value": "={{ $env.FITOS_WEBHOOK_SECRET }}" }]
+        },
+        "options": {}
+      },
+      "id": "1a2b3c4d-0002-4a10-9a10-000000000002",
+      "name": "Fetch Pending Reminders",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-360, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "due-now",
+              "leftValue": "={{ $json.reminder_time <= $now.format('HH:mm') }}",
+              "rightValue": "true",
+              "operator": { "type": "boolean", "operation": "true" }
+            },
+            {
+              "id": "still-pending",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1a2b3c4d-0002-4a10-9a10-000000000004",
+      "name": "Filter Due Now",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [120, 0],
+      "notes": "reminder_time <= now AND status is still pending. With a 15-minute poll interval this fires each reminder exactly once, shortly after its scheduled time."
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "value": "={{ $env.FITOS_TELEGRAM_SENDER_WORKFLOW_ID }}"
+        },
+        "workflowInputs": {
+          "value": {
+            "chat_id": "={{ $env.FITOS_TELEGRAM_CHAT_ID }}",
+            "message": "={{ $json.title }}: {{ $json.message }}",
+            "reminder_id": "={{ $json.id }}"
+          }
+        }
+      },
+      "id": "1a2b3c4d-0002-4a10-9a10-000000000005",
+      "name": "Send via Telegram Sender Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [360, -60],
+      "notes": "Points at the exported telegram-message-sender.json workflow's ID once imported."
+    }
+  ],
+  "connections": {
+    "Every 15 Minutes": {
+      "main": [[{ "node": "Fetch Pending Reminders", "type": "main", "index": 0 }]]
+    },
+    "Fetch Pending Reminders": {
+      "main": [[{ "node": "Filter Due Now", "type": "main", "index": 0 }]]
+    },
+    "Filter Due Now": {
+      "main": [
+        [{ "node": "Send via Telegram Sender Workflow", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}

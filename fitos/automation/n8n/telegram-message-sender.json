@@ -1,0 +1,77 @@
+{
+  "name": "FitOS - Telegram Message Sender",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            { "name": "chat_id", "type": "string" },
+            { "name": "message", "type": "string" },
+            { "name": "reminder_id", "type": "string" }
+          ]
+        }
+      },
+      "id": "0f1a1a10-0001-4a10-9a10-000000000001",
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [-200, 0]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ $json.message }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "0f1a1a10-0001-4a10-9a10-000000000002",
+      "name": "Send Telegram Message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [40, 0],
+      "credentials": {
+        "telegramApi": {
+          "id": "fitos-telegram-bot",
+          "name": "FitOS Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FITOS_API_BASE_URL }}/reminders/{{ $('When Executed by Another Workflow').item.json.reminder_id }}/sent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-fitos-webhook-secret", "value": "={{ $env.FITOS_WEBHOOK_SECRET }}" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "user_id", "value": "={{ $env.FITOS_USER_ID }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0f1a1a10-0001-4a10-9a10-000000000003",
+      "name": "Mark Reminder Sent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [280, 0],
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [[{ "node": "Send Telegram Message", "type": "main", "index": 0 }]]
+    },
+    "Send Telegram Message": {
+      "main": [[{ "node": "Mark Reminder Sent", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}
