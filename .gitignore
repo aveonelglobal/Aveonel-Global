@@ -21,6 +21,7 @@ node_modules/
 
 # Next.js
 /.next/
+.next/
 /out/
 next-env.d.ts
 *.tsbuildinfo
@@ -83,3 +84,4 @@ frontend/node_modules/.cache/default-development/6.pack
 # Environment files
 *.env
 *.env.*
+!*.env.example
